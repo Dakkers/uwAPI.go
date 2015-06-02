@@ -105,14 +105,56 @@ func (f FoodServices) announcements_dated(year, week string) (*gabs.Container, e
 	return response, err
 }
 
+// COURSES =================================
+type Courses struct {
+	key string
+}
+
+func (c Courses) courses_by_subject(subject string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(c.key, "courses", subject))
+	return response, err
+}
+
+func (c Courses) info_by_id(course_id string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(c.key, "courses", course_id))
+	return response, err
+}
+
+func (c Courses) schedule_by_classnum(classnum string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(c.key, "courses", classnum, "schedule"))
+	return response, err
+}
+
+func (c Courses) info_by_catnum(subject, catnum string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(c.key, "courses", subject, catnum))
+	return response, err
+}
+
+func (c Courses) schedule_by_catnum(subject, catnum string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(c.key, "courses", subject, catnum, "schedule"))
+	return response, err
+}
+
+func (c Courses) prereqs_by_catnum(subject, catnum string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(c.key, "courses", subject, catnum, "prerequisites"))
+	return response, err
+}
+
+func (c Courses) exam_schedule_by_catnum(subject, catnum string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(c.key, "courses", subject, catnum, "examschedule"))
+	return response, err
+}
+
 // "wrapper" object
 type UWAPI struct {
 	FoodServices
+	Courses
 }
 
 func main() {
 	API_KEY := "YOUR_API_KEY_HERE"
 	uw := UWAPI{
 		FoodServices: FoodServices{key: API_KEY},
+		Courses:      Courses{key: API_KEY},
 	}
 }
