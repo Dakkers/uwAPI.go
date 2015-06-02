@@ -145,10 +145,57 @@ func (c Courses) exam_schedule_by_catnum(subject, catnum string) (*gabs.Containe
 	return response, err
 }
 
+// EVENTS ==================================
+type Events struct {
+	key string
+}
+
+func (e Events) all() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(e.key, "events"))
+	return response, err
+}
+
+func (e Events) events_by_site(site string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(e.key, "events", site))
+	return response, err
+}
+
+func (e Events) events_by_site_and_id(site, id string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(e.key, "events", site, id))
+	return response, err
+}
+
+func (e Events) holidays() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(e.key, "events", "holidays"))
+	return response, err
+}
+
+// NEWS ====================================
+type News struct {
+	key string
+}
+
+func (n News) all() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(n.key, "news"))
+	return response, err
+}
+
+func (n News) news_by_site(site string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(n.key, "news", site))
+	return response, err
+}
+
+func (n News) news_by_site_and_id(site, id string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(n.key, "news", site, id))
+	return response, err
+}
+
 // "wrapper" object
 type UWAPI struct {
 	FoodServices
 	Courses
+	Events
+	News
 }
 
 func main() {
@@ -156,5 +203,7 @@ func main() {
 	uw := UWAPI{
 		FoodServices: FoodServices{key: API_KEY},
 		Courses:      Courses{key: API_KEY},
+		Events:       Events{key: API_KEY},
+		News:         News{key: API_KEY},
 	}
 }
