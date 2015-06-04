@@ -315,6 +315,51 @@ func (b Buildings) courses_in_room(code, roomnum string) (*gabs.Container, error
 	return response, err
 }
 
+// API =====================================
+type API struct {
+	key string
+}
+
+func (a API) usage() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(a.key, "api", "usage"))
+	return response, err
+}
+
+func (a API) services() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(a.key, "api", "services"))
+	return response, err
+}
+
+func (a API) methods() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(a.key, "api", "methods"))
+	return response, err
+}
+
+func (a API) versions() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(a.key, "api", "versions"))
+	return response, err
+}
+
+func (a API) changelog() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(a.key, "api", "changelog"))
+	return response, err
+}
+
+// SERVER ==================================
+type Server struct {
+	key string
+}
+
+func (s Server) time() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(s.key, "server", "time"))
+	return response, err
+}
+
+func (s Server) codes() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(s.key, "server", "codes"))
+	return response, err
+}
+
 // "wrapper" object
 type UWAPI struct {
 	FoodServices
@@ -327,6 +372,8 @@ type UWAPI struct {
 	Resources
 	Codes
 	Buildings
+	API
+	Server
 }
 
 func main() {
@@ -342,5 +389,7 @@ func main() {
 		Resources:    Resources{key: API_KEY},
 		Codes:        Codes{key: API_KEY},
 		Buildings:    Buildings{key: API_KEY},
+		API:          API{key: API_KEY},
+		Server:       Server{key: API_KEY},
 	}
 }
