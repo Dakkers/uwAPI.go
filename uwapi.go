@@ -210,7 +210,6 @@ func (w Weather) current() (*gabs.Container, error) {
 	return response, err
 }
 
-// FOR TERMS: do "class_schedule_by_term"
 // TERMS ===================================
 type Terms struct {
 	key string
@@ -241,6 +240,81 @@ func (t Terms) info_sessions_by_term(term string) (*gabs.Container, error) {
 	return response, err
 }
 
+// RESOURCES ===============================
+type Resources struct {
+	key string
+}
+
+func (r Resources) tutors() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(r.key, "resources", "tutors"))
+	return response, err
+}
+
+func (r Resources) printers() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(r.key, "resources", "printers"))
+	return response, err
+}
+
+func (r Resources) infosessions() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(r.key, "resources", "infosessions"))
+	return response, err
+}
+
+func (r Resources) goosewatch() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(r.key, "resources", "goosewatch"))
+	return response, err
+}
+
+// CODES ===================================
+type Codes struct {
+	key string
+}
+
+func (c Codes) units() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(c.key, "codes", "units"))
+	return response, err
+}
+
+func (c Codes) terms() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(c.key, "codes", "terms"))
+	return response, err
+}
+
+func (c Codes) groups() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(c.key, "codes", "groups"))
+	return response, err
+}
+
+func (c Codes) subjects() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(c.key, "codes", "subjects"))
+	return response, err
+}
+
+func (c Codes) instructions() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(c.key, "codes", "instructions"))
+	return response, err
+}
+
+// BUILDINGS ===============================
+type Buildings struct {
+	key string
+}
+
+func (b Buildings) list() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(b.key, "buildings", "list"))
+	return response, err
+}
+
+func (b Buildings) details_by_code(code string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(b.key, "buildings", code))
+	return response, err
+}
+
+func (b Buildings) courses_in_room(code, roomnum string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(b.key, "buildings", code, roomnum, "courses"))
+	return response, err
+}
+
 // "wrapper" object
 type UWAPI struct {
 	FoodServices
@@ -250,6 +324,9 @@ type UWAPI struct {
 	Services
 	Weather
 	Terms
+	Resources
+	Codes
+	Buildings
 }
 
 func main() {
@@ -262,5 +339,8 @@ func main() {
 		Services:     Services{key: API_KEY},
 		Weather:      Weather{key: API_KEY},
 		Terms:        Terms{key: API_KEY},
+		Resources:    Resources{key: API_KEY},
+		Codes:        Codes{key: API_KEY},
+		Buildings:    Buildings{key: API_KEY},
 	}
 }
