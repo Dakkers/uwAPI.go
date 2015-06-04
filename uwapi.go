@@ -190,12 +190,66 @@ func (n News) news_by_site_and_id(site, id string) (*gabs.Container, error) {
 	return response, err
 }
 
+// SERVICES ================================
+type Services struct {
+	key string
+}
+
+func (s Services) services_by_site(site string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(s.key, "services", site))
+	return response, err
+}
+
+// WEATHER =================================
+type Weather struct {
+	key string
+}
+
+func (w Weather) current() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(w.key, "weather", "current"))
+	return response, err
+}
+
+// FOR TERMS: do "class_schedule_by_term"
+// TERMS ===================================
+type Terms struct {
+	key string
+}
+
+func (t Terms) list() (*gabs.Container, error) {
+	response, err := callAPI(formatURL(t.key, "terms", "list"))
+	return response, err
+}
+
+func (t Terms) exam_schedule_by_term(term string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(t.key, "terms", term, "examschedule"))
+	return response, err
+}
+
+func (t Terms) subject_schedule_by_term(term, sub string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(t.key, "terms", term, sub, "schedule"))
+	return response, err
+}
+
+func (t Terms) class_schedule_by_term(term, sub, catnum string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(t.key, "terms", term, sub, catnum, "schedule"))
+	return response, err
+}
+
+func (t Terms) info_sessions_by_term(term string) (*gabs.Container, error) {
+	response, err := callAPI(formatURL(t.key, "terms", term, "infosessions"))
+	return response, err
+}
+
 // "wrapper" object
 type UWAPI struct {
 	FoodServices
 	Courses
 	Events
 	News
+	Services
+	Weather
+	Terms
 }
 
 func main() {
@@ -205,5 +259,8 @@ func main() {
 		Courses:      Courses{key: API_KEY},
 		Events:       Events{key: API_KEY},
 		News:         News{key: API_KEY},
+		Services:     Services{key: API_KEY},
+		Weather:      Weather{key: API_KEY},
+		Terms:        Terms{key: API_KEY},
 	}
 }
