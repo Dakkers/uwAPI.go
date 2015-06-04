@@ -27,9 +27,11 @@ func main() {
 }
 ```
 
-Then do whatever with the returned `gabs.Container` (check out their docs for getting, setting, etc...).
+Then do whatever with the returned `*gabs.Container` (check out their docs for getting, setting, etc...).
 
 As seen in the example, the structs (e.g. `FoodServices`) are all named appropriately, i.e. the same as they are in the UW API's docs. However, the methods are not always of the same name due to conflicts or parameters.
+
+All methods return a `*gabs.Container` and an `error` (or `nil`).
 
 Check out the [documentation](https://godoc.org/github.com/SaintDako/uwAPI.go) for more info.
 
