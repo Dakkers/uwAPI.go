@@ -1,4 +1,4 @@
-package main
+package uwapi
 
 import (
 	"fmt"
@@ -376,20 +376,19 @@ type UWAPI struct {
 	Server
 }
 
-func main() {
-	API_KEY := "YOUR_API_KEY_HERE"
-	uw := UWAPI{
-		FoodServices: FoodServices{key: API_KEY},
-		Courses:      Courses{key: API_KEY},
-		Events:       Events{key: API_KEY},
-		News:         News{key: API_KEY},
-		Services:     Services{key: API_KEY},
-		Weather:      Weather{key: API_KEY},
-		Terms:        Terms{key: API_KEY},
-		Resources:    Resources{key: API_KEY},
-		Codes:        Codes{key: API_KEY},
-		Buildings:    Buildings{key: API_KEY},
-		API:          API{key: API_KEY},
-		Server:       Server{key: API_KEY},
+func Create(key string) UWAPI {
+	return UWAPI{
+		FoodServices: FoodServices{key},
+		Courses:      Courses{key},
+		Events:       Events{key},
+		News:         News{key},
+		Services:     Services{key},
+		Weather:      Weather{key},
+		Terms:        Terms{key},
+		Resources:    Resources{key},
+		Codes:        Codes{key},
+		Buildings:    Buildings{key},
+		API:          API{key},
+		Server:       Server{key},
 	}
 }
